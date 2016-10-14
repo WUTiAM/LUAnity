@@ -63,11 +63,11 @@ namespace LUAnity
 		public const int LUA_MULTRET = -1;
 
 #if UNITY_EDITOR
-		const string LIBNAME = "lua";
+		const string LIBNAME = "luanity";
 #elif UNITY_IOS
 		const string LIBNAME = "__Internal";
 #else
-		const string LIBNAME = "lua";
+		const string LIBNAME = "luanity";
 #endif
 
 		//

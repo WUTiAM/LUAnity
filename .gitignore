@@ -1,9 +1,9 @@
 .vs/
 Library/
-Tools/Lua/Source/Plugins/
 Temp/
 *.sln
 *.csproj
-Tools/Lua/Source/LuaJIT-2.0.4/src/libluajit.so
-Tools/Lua/Source/LuaJIT-2.0.4/src/luajit
+Tools/LUAnity/Source/Plugins/
+Tools/LUAnity/Source/LuaJIT-2.0.4/src/libluajit.so
+Tools/LUAnity/Source/LuaJIT-2.0.4/src/luajit
 *.o

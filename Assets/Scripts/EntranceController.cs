@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EntranceController : MonoBehaviour
 {
@@ -17,12 +18,12 @@ public class EntranceController : MonoBehaviour
 		GameObject go = MonoBehaviour.Instantiate( o ) as GameObject;
 		go.name = "Game";
 		DontDestroyOnLoad( go );
+
+		SceneManager.LoadScene( "Main" );
 	}
 
 	void _InitializeUnity()
 	{
-		DontDestroyOnLoad( gameObject );
-
 		Application.runInBackground = true;
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;		
 	}

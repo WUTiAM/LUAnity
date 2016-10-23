@@ -11,7 +11,7 @@ local function classMainController()
 
 	---- 成员函数 前置声明 ----
 
-	local _onGameLogout
+	local _onTankAdding
 
 	---- 成员函数 ----
 
@@ -19,11 +19,13 @@ local function classMainController()
 	end
 
 	function self.start()
-		self._addEventListener( game.events.logout, _onGameLogout )
+		self._addEventListener( game.events.tankAdding, _onTankAdding )
 	end
 
-	function _onGameLogout()
+	function _onTankAdding()
+		AssetLoader.LoadPrefab( "Tank", self.gameObject )
 
+		print("A tank added")
 	end
 
 	function self.update()

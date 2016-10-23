@@ -3,15 +3,10 @@ using System;
 using System.Collections;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class L2U
 {
-	//public static void ConnectToHost( string ip, int port, int selectedServerId )
-	//{
-	//	NetworkSystem.Instance().SelectedServerId = selectedServerId;
-	//	Game.Instance.StartCoroutine( NetworkSystem.Instance().ConnectToHost( ip, port ) );
-	//}
-
 	//public static object GetCsharpMemory( int len )
 	//{
 	//	return new byte[len];
@@ -87,7 +82,7 @@ public static class L2U
 			Vector3 angles = go.transform.localEulerAngles;
 			Vector3 scale = go.transform.localScale;
 
-			go.transform.parent = parentGO.transform;
+			go.transform.SetParent( parentGO.transform );
 			go.transform.localPosition = pos;
 			go.transform.localEulerAngles = angles;
 			go.transform.localScale = scale;
@@ -129,7 +124,7 @@ public static class L2U
 
 		go.transform.localPosition = _vec;
 	}
-	public static void SetGameObjectWorldPosition( GameObject go, float x, float y, float z )
+	public static void SetGameObjectPosition( GameObject go, float x, float y, float z )
 	{
 		_vec.x = x;
 		_vec.y = y;
@@ -142,7 +137,7 @@ public static class L2U
 	{
 		go.transform.localPosition = theOtherGO.transform.position;
 	}
-	public static void SetGameObjectWorldPositionToTheOther( GameObject go, GameObject theOtherGO )
+	public static void SetGameObjectPositionToTheOther( GameObject go, GameObject theOtherGO )
 	{
 		go.transform.position = theOtherGO.transform.position;
 	}
@@ -157,7 +152,7 @@ public static class L2U
 
 		go.transform.localRotation = Quaternion.LookRotation( _vec );
 	}
-	public static void SetGameObjectWorldRotation( GameObject go, float orientationX, float orientationY, float orientationZ )
+	public static void SetGameObjectRotation( GameObject go, float orientationX, float orientationY, float orientationZ )
 	{
 		_vec.x = orientationX;
 		_vec.y = orientationY;
@@ -170,7 +165,7 @@ public static class L2U
 	{
 		go.transform.localRotation = theOtherGO.transform.rotation;
 	}
-	public static void SetGameObjectWorldRotationToTheOther( GameObject go, GameObject theOtherGO )
+	public static void SetGameObjectRotationToTheOther( GameObject go, GameObject theOtherGO )
 	{
 		go.transform.rotation = theOtherGO.transform.rotation;
 	}
@@ -327,36 +322,21 @@ public static class L2U
 		}
 	}
 
-	// 注意：这个gameObject的layer需要为 SelectableModel
-	//public static GameObject TryGetPickedGameObjectInSelectableModel( Vector2 pickPos )
-	//{
-	//	if( Camera.main != null )
-	//	{
-	//		Ray kRay = Camera.main.ScreenPointToRay( new Vector3( pickPos.x, pickPos.y, 0f ) );
-	//		int nLayerMask = 1 << (int)Layers.SelectableModel;
-	//		RaycastHit hit;
-	//		if( Physics.Raycast( kRay, out hit, Mathf.Infinity, nLayerMask ) == true )
-	//		{
-	//			return hit.collider.gameObject;
-	//		}
-	//	}
-	public static Vector3 PickHorizontalPlane( Vector2 pickPos, float planeY )
+	// UI events
+
+	public static void AddUIButtonOnClickListener( GameObject go, object luaFunc )
 	{
-		if( Camera.main == null )
-			return Vector3.zero;
+		Debug.Assert( go != null );
+		Debug.Assert( luaFunc != null );
 
-		Plane plane = new Plane( Vector3.up, new Vector3( 0f, planeY, 0f ) );
-		Ray ray = Camera.main.ScreenPointToRay( new Vector3( pickPos.x, pickPos.y, 0f ) );
-		float enter;
-		if( plane.Raycast( ray, out enter ) )
-		{
-			return ray.origin + ray.direction * enter;
-		}
+		Button button = go.GetComponent<Button>();
+		Debug.Assert( button != null );
 
-		return Vector3.zero;
+		button.onClick.AddListener( delegate()
+			{
+				LuaFunction func = luaFunc as LuaFunction;
+				func.Call( go );
+			}
+		);
 	}
-
-	//	return null;
-	//}
-
 }

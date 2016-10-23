@@ -128,15 +128,9 @@ Vector2 = luanet.import_type( "UnityEngine.Vector2" )
 Vector3 = luanet.import_type( "UnityEngine.Vector3" )
 Vector4 = luanet.import_type( "UnityEngine.Vector4" )
 
--- UI classes
-NGUITools = luanet.import_type( "NGUITools" )
-UICamera = luanet.import_type( "UICamera" )
-UIWidget = luanet.import_type( "UIWidget" )
-
 -- Others classes
 AssetLoader = luanet.import_type( "AssetLoader" )
 L2U = luanet.import_type( "L2U" )
-NativeOs = luanet.import_type( "NativeOs" )
 
 --
 -- More Lua extensions

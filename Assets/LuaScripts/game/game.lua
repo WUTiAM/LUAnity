@@ -15,15 +15,7 @@ local function classGame()
 	self.SCENE_TRANSITION_EFFECT_DURATION = 0.1
 
 	self.events = classEvents( {
-		"logout",
-
-		-- C# 层触发的事件
-
-		"pressed",
-		"uiPressed",
-		"slideStart",
-		"sliding",
-		"slideEnd",
+		"tankAdding",
 
 		"applicationPaused",
 		"applicationResumed",
@@ -46,7 +38,6 @@ local function classGame()
 	---- 成员函数 ----
 
 	function self.logout()
-		self.events.logout()
 	end
 
 

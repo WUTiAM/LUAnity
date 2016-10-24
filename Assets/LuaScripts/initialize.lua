@@ -118,6 +118,7 @@ GameObject = luanet.import_type( "UnityEngine.GameObject" )
 Input = luanet.import_type( "UnityEngine.Input" )
 PlayerPrefs = luanet.import_type( "UnityEngine.PlayerPrefs" )
 RenderSettings = luanet.import_type( "UnityEngine.RenderSettings" )
+SceneManager = luanet.import_type('UnityEngine.SceneManagement.SceneManager')
 Screen = luanet.import_type( "UnityEngine.Screen" )
 Time = luanet.import_type('UnityEngine.Time')
 -- Unity structs

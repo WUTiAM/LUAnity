@@ -46,8 +46,8 @@ local function classMainUIController()
 			_onButton2Clicked,
 		}
 		local buttonTexts = {
-			{ "Hello World", "Control UIs, deferred operations", },
-			{ "Add a Tank", "Load prefab, play animation", },
+			{ "Hello World", "Control UIs with deferred operations", },
+			{ "Add a Tank", "Load prefab and instantiate", },
 		}
 
 		for i = 1, 2 do

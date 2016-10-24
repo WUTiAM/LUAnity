@@ -37,10 +37,6 @@ local function classGame()
 
 	---- 成员函数 ----
 
-	function self.logout()
-	end
-
-
 	function self.update()
 		deferredOpSystem.update()
 		coroutineSystem.update()

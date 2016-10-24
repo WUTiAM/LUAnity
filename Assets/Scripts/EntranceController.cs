@@ -5,21 +5,9 @@ public class EntranceController : MonoBehaviour
 {
 	void Awake()
 	{
-		if( GameLuaBehaviour.Instance != null )
-		{
-			GameObject.Destroy( GameLuaBehaviour.Instance.gameObject );
-		}
-
 		_InitializeUnity();
-
 		_InitializeLua();
-
-		Object o = Resources.Load( "Prefabs/GameController" );
-		GameObject go = MonoBehaviour.Instantiate( o ) as GameObject;
-		go.name = "Game";
-		DontDestroyOnLoad( go );
-
-		SceneManager.LoadScene( "Main" );
+		_InitializeGame();
 	}
 
 	void _InitializeUnity()
@@ -31,5 +19,18 @@ public class EntranceController : MonoBehaviour
 	void _InitializeLua()
 	{
 		LuaSystem.Initialize();
+	}
+
+	void _InitializeGame()
+	{
+		Object o = Resources.Load( "Prefabs/GameController" );
+		GameObject go = MonoBehaviour.Instantiate( o ) as GameObject;
+		go.name = "Game";
+		DontDestroyOnLoad( go );
+
+		SceneManager.sceneLoaded += delegate( Scene scene, LoadSceneMode mode )
+		{
+			AssetLoader.OnSceneLoaded( scene, mode );
+		};
 	}
 }

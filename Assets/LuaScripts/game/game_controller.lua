@@ -22,6 +22,9 @@ local function classGameController()
 	end
 
 	function self.start()
+		AssetLoader.LoadScene( "Main", function()
+			print( "Main scene loaded" )
+		end )
 	end
 
 	function self.update()
@@ -43,34 +46,6 @@ local function classGameController()
 	end
 
 	function self.onDestroy()
-	end
-
-	function self.onClick( position )
-		if not L2U.IsTouchedOnUI() then
-			game.events.pressed( position )
-		end
-	end
-
-	function self.onUIClick( position )
-		game.events.uiPressed( position )
-	end
-
-	function self.onDragStart( position )
-		if not L2U.IsTouchedOnUI() then
-			game.events.slideStart( position )
-		end
-	end
-
-	function self.onDrag( position, distanceFromOrigPos, deltaDistance )
-		if not L2U.IsTouchedOnUI() then
-			game.events.sliding( position, distanceFromOrigPos, deltaDistance )
-		end
-	end
-
-	function self.onDragEnd( position, distanceFromOrigPos, deltaDistance )
-		if not L2U.IsTouchedOnUI() then
-			game.events.slideEnd( position, distanceFromOrigPos, deltaDistance )
-		end
 	end
 
 	function self.onApplicationPause( paused )

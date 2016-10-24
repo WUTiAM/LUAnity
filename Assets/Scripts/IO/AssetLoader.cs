@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public static class AssetLoader
 {
-	static List<LuaFunction> _SceneLoadedCallbacks = new List<LuaFunction>();
+	static Dictionary<string, LuaFunction> _sceneLoadedCallbacks = new Dictionary<string, LuaFunction>();
 
 	public static void LoadScene( string sceneName )
 	{
@@ -16,7 +16,7 @@ public static class AssetLoader
 
 	public static void LoadScene( string sceneName, object luaCallbackFunc )
 	{
-		_SceneLoadedCallbacks.Add( luaCallbackFunc as LuaFunction );
+		_sceneLoadedCallbacks.Add( sceneName, luaCallbackFunc as LuaFunction );
 
 		SceneManager.LoadScene( sceneName );
 	}
@@ -26,19 +26,19 @@ public static class AssetLoader
 		SceneManager.LoadScene( sceneName, LoadSceneMode.Additive );
 	}
 
-	public static void OnSceneLoaded( int level )
+	public static void OnSceneLoaded( Scene scene, LoadSceneMode mode )
 	{
 		Resources.UnloadUnusedAssets();
 		System.GC.Collect();
 
-		if( _SceneLoadedCallbacks.Count > 0 )
+		if( _sceneLoadedCallbacks.Count > 0 )
 		{
-			LuaFunction callback = _SceneLoadedCallbacks[0];
-			_SceneLoadedCallbacks.RemoveAt( 0 );
+			LuaFunction callback = _sceneLoadedCallbacks[scene.name];
+			_sceneLoadedCallbacks.Remove( scene.name );
 
 			if( callback != null )
 			{
-				callback.Call( level );
+				callback.Call( scene.name );
 			}
 		}
 	}

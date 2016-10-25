@@ -23,9 +23,10 @@ local function classMainController()
 	end
 
 	function _onTankAdding()
-		AssetLoader.LoadPrefab( "Tank", self.gameObject )
+		local tankGO = AssetLoader.LoadPrefab( "Tank", self.gameObject )
+		L2U.SetGameObjectPosition( tankGO, math.random() * 2 - 1, 0, math.random() * 2 - 1 )
 
-		print("A tank added")
+		print("One tank added")
 	end
 
 	function self.update()

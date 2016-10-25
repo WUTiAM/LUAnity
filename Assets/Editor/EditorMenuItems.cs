@@ -7,13 +7,13 @@ using UnityEngine;
 
 public class EditorMenuItems : MonoBehaviour
 {
-	const string EDITOR_MENU_ROOT_NAME = "__LUAnity_Project__";
+	const string EDITOR_MENU_ROOT_NAME = "[ LUAnity Project ]";
 
 	//
 	// Basic utilities
 	//
 
-	[MenuItem( EDITOR_MENU_ROOT_NAME + "/Open the 1st scene", false, 1000 )]
+	[MenuItem( EDITOR_MENU_ROOT_NAME + "/Open [ The 0th Scene ]", false, 1000 )]
 	static void OpenMainScene()
 	{
 		if( EditorBuildSettings.scenes.Length > 0 )
@@ -33,28 +33,28 @@ public class EditorMenuItems : MonoBehaviour
 	const string DEBUG_MODE_SYMBOL = "_DEBUG_";
 	static bool _debugModeEnabled = false;
 
-	[MenuItem( EDITOR_MENU_ROOT_NAME + "/DebugMode/ON", false, 9100 )]
+	[MenuItem( EDITOR_MENU_ROOT_NAME + "/Debug Mode/ON", false, 9100 )]
 	public static void EnableDebugMode()
 	{
 		_debugModeEnabled = true;
 
 		AddScriptingSymbol( DEBUG_MODE_SYMBOL );
 	}
-	[MenuItem( EDITOR_MENU_ROOT_NAME + "/DebugMode/ON", true )]
+	[MenuItem( EDITOR_MENU_ROOT_NAME + "/Debug Mode/ON", true )]
 	static bool ValidateEnableDebugMode()
 	{
 		_debugModeEnabled = _IsScriptingSymbolEnabled( DEBUG_MODE_SYMBOL );
 		return !_debugModeEnabled;
 	}
 
-	[MenuItem( EDITOR_MENU_ROOT_NAME + "/DebugMode/OFF", false, 9101 )]
+	[MenuItem( EDITOR_MENU_ROOT_NAME + "/Debug Mode/OFF", false, 9101 )]
 	public static void DisableDebugMode()
 	{
 		_debugModeEnabled = false;
 
 		RemoveScriptingSymbol( DEBUG_MODE_SYMBOL );
 	}
-	[MenuItem( EDITOR_MENU_ROOT_NAME + "/DebugMode/OFF", true )]
+	[MenuItem( EDITOR_MENU_ROOT_NAME + "/Debug Mode/OFF", true )]
 	static bool ValidateDisableDebugMode()
 	{
 		_debugModeEnabled = _IsScriptingSymbolEnabled( DEBUG_MODE_SYMBOL );
@@ -106,19 +106,19 @@ public class EditorMenuItems : MonoBehaviour
 	// Unity project windows
 	//
 
-	[MenuItem( EDITOR_MENU_ROOT_NAME + "/Show PlayerSettings window", false, 10010 )]
+	[MenuItem( EDITOR_MENU_ROOT_NAME + "/Show [ Player Settings ] window", false, 10010 )]
 	static void ShowPlayerSettingsInspector()
 	{
 		EditorApplication.ExecuteMenuItem( "Edit/Project Settings/Player" );
 	}
 
-	[MenuItem( EDITOR_MENU_ROOT_NAME + "/Show Quality Settings window", false, 10020 )]
+	[MenuItem( EDITOR_MENU_ROOT_NAME + "/Show [ Quality Settings ] window", false, 10020 )]
 	static void ShowQualitySettingsInspector()
 	{
 		EditorApplication.ExecuteMenuItem( "Edit/Project Settings/Quality" );
 	}
 
-	[MenuItem( EDITOR_MENU_ROOT_NAME + "/Show Graphics Settings window", false, 10030 )]
+	[MenuItem( EDITOR_MENU_ROOT_NAME + "/Show [ Graphics Settings ] window", false, 10030 )]
 	static void ShowGraphicsSettingsInspector()
 	{
 		EditorApplication.ExecuteMenuItem( "Edit/Project Settings/Graphics" );

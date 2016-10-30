@@ -9,9 +9,9 @@ namespace LUAnity
 	// Passes objects from the CLR to Lua and vice-versa
 	public class ObjectTranslator
 	{
-		internal Lua Interpreter;
-		internal MetaFunctions MetaFunctions;
-		internal TypeChecker TypeChecker;
+		public Lua Interpreter;
+		public MetaFunctions MetaFunctions;
+		public TypeChecker TypeChecker;
 
 		List<Assembly> _assemblies;
 
@@ -28,7 +28,7 @@ namespace LUAnity
 		readonly Dictionary<object, int> _objectsBackward = new Dictionary<object, int>();
 		int _nextObjectIndex = 0; // We want to ensure that objects always have a unique ID
 
-		//internal EventHandlerContainer pendingEvents = new EventHandlerContainer();
+		//public EventHandlerContainer pendingEvents = new EventHandlerContainer();
 
 		public ObjectTranslator( Lua interpreter, IntPtr luaState )
 		{
@@ -388,7 +388,7 @@ namespace LUAnity
 		// TableToArray
 		//--------------------------------------------------------------------------------------------------------------
 
-		internal Type FindType( string className )
+		public Type FindType( string className )
 		{
 			foreach( var assembly in _assemblies )
 			{
@@ -400,19 +400,19 @@ namespace LUAnity
 		}
 
 		// Pushes a type reference into the stack
-		internal void PushType( IntPtr luaState, Type t )
+		public void PushType( IntPtr luaState, Type t )
 		{
 			PushObject( luaState, new ProxyType( t ), "luaNet_class" );
 		}
 
 		// Pushes a delegate into the stack
-		internal void PushFunction( IntPtr luaState, LuaCSFunction func )
+		public void PushFunction( IntPtr luaState, LuaCSFunction func )
 		{
 			PushObject( luaState, func, "luaNet_function" );
 		}
 
 		// Pushes a CLR object into the Lua stack as an userdata with the provided metatable
-		internal void PushObject( IntPtr luaState, object o, string metatable )
+		public void PushObject( IntPtr luaState, object o, string metatable )
 		{
 			// Pushes nil
 			if( o == null )
@@ -580,14 +580,14 @@ namespace LUAnity
 		}
 
 		// Gets an object from the Lua stack with the desired type if it matches, otherwise returns null
-		internal object GetAsType( IntPtr luaState, int stackPos, Type paramType )
+		public object GetAsType( IntPtr luaState, int stackPos, Type paramType )
 		{
 			ValueExtractor extractor = TypeChecker.CheckLuaType( luaState, stackPos, paramType );
 			return extractor != null ? extractor( luaState, stackPos ) : null;
 		}
 
 		// Given the Lua int ID for an object, remove it from our maps
-		internal void CollectObject( int udata )
+		public void CollectObject( int udata )
 		{
 			object o;
 			bool found = _objects.TryGetValue( udata, out o );
@@ -610,7 +610,7 @@ namespace LUAnity
 		}
 
 		// Gets an object from the Lua stack according to its Lua type
-		internal object GetObject( IntPtr luaState, int index )
+		public object GetObject( IntPtr luaState, int index )
 		{
 			var type = LuaLib.lua_type( luaState, index );
 
@@ -647,7 +647,7 @@ namespace LUAnity
 		}
 
 		// Gets the function in the index positon of the Lua stack
-		internal LuaFunction GetFunction( IntPtr luaState, int index )
+		public LuaFunction GetFunction( IntPtr luaState, int index )
 		{
 			LuaLib.lua_pushvalue( luaState, index );
 			int reference = LuaLib.luaL_ref( luaState, LuaIndexes.LUA_REGISTRYINDEX );
@@ -657,7 +657,7 @@ namespace LUAnity
 		}
 
 		// Gets the table in the index positon of the Lua stack
-		internal LuaTable GetTable( IntPtr luaState, int index )
+		public LuaTable GetTable( IntPtr luaState, int index )
 		{
 			LuaLib.lua_pushvalue( luaState, index );
 			int reference = LuaLib.luaL_ref( luaState, LuaIndexes.LUA_REGISTRYINDEX );
@@ -667,7 +667,7 @@ namespace LUAnity
 		}
 
 		// Gets the userdata in the index positon of the Lua stack
-		internal LuaUserData GetUserData( IntPtr luaState, int index )
+		public LuaUserData GetUserData( IntPtr luaState, int index )
 		{
 			LuaLib.lua_pushvalue( luaState, index );
 			int reference = LuaLib.luaL_ref( luaState, LuaIndexes.LUA_REGISTRYINDEX );
@@ -678,7 +678,7 @@ namespace LUAnity
 
 		// Gets the CLR object in the index positon of the Lua stack
 		// Returns delegates as Lua functions
-		internal object GetNetObject( IntPtr luaState, int index )
+		public object GetNetObject( IntPtr luaState, int index )
 		{
 			int idx = LuaLib.luanet_tonetobject( luaState, index );
 			return idx != -1 ? _objects[idx] : null;
@@ -686,14 +686,14 @@ namespace LUAnity
 
 		// Gets the CLR object in the index position of the Lua stack
 		// Returns delegates as is
-		internal object GetRawNetObject( IntPtr luaState, int index )
+		public object GetRawNetObject( IntPtr luaState, int index )
 		{
 			int udata = LuaLib.luanet_rawnetobj( luaState, index );
 			return udata != -1 ? _objects[udata] : null;
 		}
 
 		// Gets the values from the provided index to the top of the stack and returns them in an array
-		internal object[] PopValues( IntPtr luaState, int oldTop )
+		public object[] PopValues( IntPtr luaState, int oldTop )
 		{
 			int newTop = LuaLib.lua_gettop( luaState );
 			if( oldTop == newTop )
@@ -717,7 +717,7 @@ namespace LUAnity
 
 		// Gets the values from the provided index to the top of the stack and returns them in an array,
 		// casting them to the provided types
-		internal object[] PopValues( IntPtr luaState, int oldTop, Type[] popTypes )
+		public object[] PopValues( IntPtr luaState, int oldTop, Type[] popTypes )
 		{
 			int newTop = LuaLib.lua_gettop( luaState );
 			if( oldTop == newTop )
@@ -747,7 +747,7 @@ namespace LUAnity
 		}
 
 		// Pushes the object into the Lua stack according to its type
-		internal void Push( IntPtr luaState, object o )
+		public void Push( IntPtr luaState, object o )
 		{
 			if( o == null )
 			{
@@ -798,7 +798,7 @@ namespace LUAnity
 		}
 
 		// Checks if the method matches the arguments in the Lua stack, getting the arguments if it does
-		internal bool MatchParameters( IntPtr luaState, MethodBase method, ref MethodCache methodCache )
+		public bool MatchParameters( IntPtr luaState, MethodBase method, ref MethodCache methodCache )
 		{
 			ValueExtractor extractValue;
 			bool isMethod = true;
@@ -983,7 +983,7 @@ namespace LUAnity
 			return isParamArray;
 		}
 
-		internal Array TableToArray( Func<int, object> luaParamValueExtractor, Type paramArrayType, int startIndex, int count )
+		public Array TableToArray( Func<int, object> luaParamValueExtractor, Type paramArrayType, int startIndex, int count )
 		{
 			Array paramArray;
 
@@ -1039,7 +1039,7 @@ namespace LUAnity
 		}
 
 		// Passes errors (argument e) to the Lua interpreter
-		internal void ThrowError( IntPtr luaState, object e )
+		public void ThrowError( IntPtr luaState, object e )
 		{
 			// We use this to remove anything pushed by luaL_where
 			int oldTop = LuaLib.lua_gettop( luaState );
@@ -1075,7 +1075,7 @@ namespace LUAnity
 			LuaLib.lua_error( luaState );
 		}
 
-		internal int PushError( IntPtr luaState, string msg )
+		public int PushError( IntPtr luaState, string msg )
 		{
 			LuaLib.lua_pushnil( luaState );
 			LuaLib.lua_pushstring( luaState, msg );

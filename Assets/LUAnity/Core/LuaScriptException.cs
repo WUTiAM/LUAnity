@@ -10,7 +10,7 @@
 		// The position in the script where the exception was triggered.
 		public override string Source { get { return _source; } }
 
-		private readonly string _source;
+		readonly string _source;
 
 		// Creates a new Lua-only exception.
 		public LuaScriptException( string message, string source ) : base( message )

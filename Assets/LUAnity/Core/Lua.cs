@@ -213,7 +213,7 @@ luanet.load_assembly('mscorlib')
 		}
 
 		#region Globals auto-complete
-		private void RegisterGlobal( string path, Type type, int recursionCounter )
+		void RegisterGlobal( string path, Type type, int recursionCounter )
 		{
 			// If the type is a global method, list it directly
 			if( type == typeof( LuaCSFunction ) )
@@ -288,26 +288,41 @@ luanet.load_assembly('mscorlib')
 		}
 		#endregion
 
-		// Executes a Lua chunk and returns all the chunk's return values in an array.
+		public LuaFunction LoadString( byte[] chunk, string chunkName = "chunk" )
+		{
+			int oldTop = LuaLib.lua_gettop( _luaState );
+
+			if( LuaLib.luaL_loadbuffer( _luaState, chunk, chunk.Length, chunkName) != 0 )
+			{
+				ThrowExceptionFromError( oldTop );
+			}
+
+			LuaFunction result = _translator.GetFunction( _luaState, -1 );
+			_translator.PopValues( _luaState, oldTop );
+
+			return result;
+		}
+
+		// Executes a Lua chunk and returns all the chunk's return values in an array
 		public object[] DoString( byte[] chunk, string chunkName = "chunk" )
 		{
 			int oldTop = LuaLib.lua_gettop( _luaState );
 
-			if( LuaLib.luaL_loadbuffer( _luaState, chunk, chunk.Length, chunkName ) == 0 )
+			if( LuaLib.luaL_loadbuffer( _luaState, chunk, chunk.Length, chunkName ) != 0 )
 			{
-				if( LuaLib.lua_pcall( _luaState, 0, -1, 0 ) == 0 )
-				{
-					return _translator.PopValues( _luaState, oldTop );
-				}
+				ThrowExceptionFromError( oldTop );
 			}
 
-			ThrowExceptionFromError( oldTop );
+			if( LuaLib.lua_pcall( _luaState, 0, -1, 0 ) != 0 )
+			{
+				ThrowExceptionFromError( oldTop );
+			}
 
-			return null; // Never reached - keeps compiler happy
+			return _translator.PopValues( _luaState, oldTop );
 		}
 
 		// Gets a field of the table corresponding to the provided reference using rawget (do not use metatables)
-		internal object RawGetObject( int reference, string field )
+		public object RawGetObject( int reference, string field )
 		{
 			int oldTop = LuaLib.lua_gettop( _luaState );
 
@@ -322,7 +337,7 @@ luanet.load_assembly('mscorlib')
 		}
 
 		// Gets a field of the table or userdata corresponding to the provided reference
-		internal object GetObject( int reference, string field )
+		public object GetObject( int reference, string field )
 		{
 			int oldTop = LuaLib.lua_gettop( _luaState );
 
@@ -335,7 +350,7 @@ luanet.load_assembly('mscorlib')
 		}
 
 		// Gets a numeric field of the table or userdata corresponding the the provided reference
-		internal object GetObject( int reference, object field )
+		public object GetObject( int reference, object field )
 		{
 			int oldTop = LuaLib.lua_gettop( _luaState );
 
@@ -350,7 +365,7 @@ luanet.load_assembly('mscorlib')
 		}
 
 		// Navigates a table in the top of the stack, returning the value of the specified field
-		internal object GetObject( string[] remainingPath )
+		public object GetObject( string[] remainingPath )
 		{
 			object returnValue = null;
 
@@ -368,7 +383,7 @@ luanet.load_assembly('mscorlib')
 		}
 
 		// Sets a field of the table or userdata corresponding the the provided reference to the provided value
-		internal void SetObject( int reference, string field, object val )
+		public void SetObject( int reference, string field, object val )
 		{
 			int oldTop = LuaLib.lua_gettop( _luaState );
 
@@ -379,7 +394,7 @@ luanet.load_assembly('mscorlib')
 		}
 
 		// Sets a numeric field of the table or userdata corresponding the the provided reference to the provided value
-		internal void SetObject( int reference, object field, object val )
+		public void SetObject( int reference, object field, object val )
 		{
 			int oldTop = LuaLib.lua_gettop( _luaState );
 
@@ -392,7 +407,7 @@ luanet.load_assembly('mscorlib')
 		}
 
 		// Navigates a table to set the value of one of its fields
-		internal void SetObject( string[] remainingPath, object val )
+		public void SetObject( string[] remainingPath, object val )
 		{
 			for( int i = 0; i < remainingPath.Length - 1; ++i )
 			{
@@ -429,14 +444,14 @@ luanet.load_assembly('mscorlib')
 			return ( obj is LuaCSFunction ? new LuaFunction( (LuaCSFunction)obj, this ) : (LuaFunction)obj );
 		}
 
-		internal void PushFunction( LuaCSFunction function )
+		public void PushFunction( LuaCSFunction function )
 		{
 			_translator.PushFunction( _luaState, function );
 		}
 
 		// Calls the object as a function with the provided arguments and casting returned values to the types in
 		// returnTypes before returning them in an array
-		internal object[] CallFunction( object function, object[] args, Type[] returnTypes = null )
+		public object[] CallFunction( object function, object[] args, Type[] returnTypes = null )
 		{
 			int nArgs = 0;
 			int oldTop = LuaLib.lua_gettop( _luaState );
@@ -472,7 +487,7 @@ luanet.load_assembly('mscorlib')
 		}
 
 		// Creates a new table as a global variable or as a field inside an existing table
-		internal void NewTable( string fullPath )
+		public void NewTable( string fullPath )
 		{
 			int oldTop = LuaLib.lua_gettop( _luaState );
 
@@ -500,7 +515,7 @@ luanet.load_assembly('mscorlib')
 			LuaLib.lua_settop( _luaState, oldTop );
 		}
 
-		internal Dictionary<object, object> GetTableDict( LuaTable table )
+		public Dictionary<object, object> GetTableDict( LuaTable table )
 		{
 			var dict = new Dictionary<object, object>();
 
@@ -521,7 +536,7 @@ luanet.load_assembly('mscorlib')
 
 		// Assuming we have a Lua error string sitting on the stack, throw a C# exception out to the user's app
 		// Thrown if the script caused an exception
-		internal void ThrowExceptionFromError( int oldTop )
+		public void ThrowExceptionFromError( int oldTop )
 		{
 			object err = _translator.GetObject( _luaState, -1 );
 			LuaLib.lua_settop( _luaState, oldTop );
@@ -541,7 +556,7 @@ luanet.load_assembly('mscorlib')
 
 		// Convert C# exceptions into Lua errors
 		// Returns>num of things on stack, null for no pending exception
-		internal int SetPendingException( Exception e )
+		public int SetPendingException( Exception e )
 		{
 			if( e != null )
 			{
@@ -554,7 +569,7 @@ luanet.load_assembly('mscorlib')
 			return 0;
 		}
 
-		internal bool CompareRef( int reference1, int reference2 )
+		public bool CompareRef( int reference1, int reference2 )
 		{
 			int top = LuaLib.lua_gettop( _luaState );
 
@@ -568,7 +583,7 @@ luanet.load_assembly('mscorlib')
 		}
 
 		// Lets go of a previously allocated reference to a table, function or userdata
-		internal void Dispose( int reference )
+		public void Dispose( int reference )
 		{
 			if( _luaState != IntPtr.Zero )
 			{
@@ -580,9 +595,9 @@ luanet.load_assembly('mscorlib')
 		{
 			if( _luaState != IntPtr.Zero )
 			{
-				_translators.Remove( _luaState );
-
 				LuaLib.lua_close( _luaState );
+
+				_translators.Remove( _luaState );
 			}
 		}
 

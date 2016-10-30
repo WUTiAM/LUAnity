@@ -8,7 +8,7 @@
 		protected int _reference;
 		protected Lua _interpreter;
 
-		private bool _disposed;
+		bool _disposed;
 
 		~LuaObjectBase()
 		{

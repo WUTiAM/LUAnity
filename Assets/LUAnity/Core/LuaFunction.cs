@@ -4,7 +4,7 @@
 
 	public class LuaFunction : LuaObjectBase
 	{
-		internal LuaCSFunction Function;
+		public LuaCSFunction Function;
 
 		public LuaFunction( int reference, Lua interpreter )
 		{
@@ -23,7 +23,7 @@
 		}
 
 		// Calls the function casting return values to the types in returnTypes
-		internal object[] Call( object[] args, Type[] returnTypes )
+		public object[] Call( object[] args, Type[] returnTypes )
 		{
 			return _interpreter.CallFunction( this, args, returnTypes );
 		}
@@ -35,7 +35,7 @@
 		}
 
 		// Pushes the function into the Lua stack
-		internal void Push( IntPtr luaState )
+		public void Push( IntPtr luaState )
 		{
 			if( _reference != 0 )
 			{

@@ -1,0 +1,125 @@
+--
+-- Example UI Behaviour
+--
+
+local classGOBehaviourBase = require( "gameobject_behaviour_base" )
+
+local function classExampleUI()
+	local self = classGOBehaviourBase()
+
+	---- 成员变量 ----
+
+	local _canvasGO = nil
+
+	local _button1 = nil
+
+	local _helloWorldStartTime = 0
+	local _helloTextGO = nil
+	local _worldTextGO = nil
+
+	---- 成员函数 前置声明 ----
+
+	local _initButtons
+	local _initHelloWorldTexts
+
+	local _onButtonHelloWorldClicked
+	local _onButtonErrorClicked
+	local _onButtonExitClicked
+
+	---- 成员函数 ----
+
+	function self.awake()
+		_canvasGO = L2U.FindGameObject( "Canvas", self.gameObject )
+
+		_initButtons()
+		_initHelloWorldTexts()
+	end
+
+	function _initButtons()
+		local buttonPrototypeGO = L2U.FindGameObject( "Button", _canvasGO )
+		buttonPrototypeGO:SetActive( false )
+
+		local buttonLocalPos = buttonPrototypeGO.transform.localPosition
+		local buttonLocalPosX = buttonLocalPos.x
+		local buttonLocalPosY = buttonLocalPos.y
+
+		local buttonOnClickListeners = {
+			_onButtonHelloWorldClicked,
+			_onButtonErrorClicked,
+			_onButtonExitClicked,
+		}
+		local buttonTexts = {
+			"Hello World",
+			"Make Error",
+			"Exit",
+		}
+
+		for i = 1, #buttonTexts do
+			local buttonGO = L2U.CloneGameObject( buttonPrototypeGO )
+			buttonGO:SetActive( true )
+			L2U.SetGameObjectLocalPosition( buttonGO, buttonLocalPosX, buttonLocalPosY - 60 * ( i - 1 ), 0 )
+			L2U.AddUIButtonOnClickListener( buttonGO, buttonOnClickListeners[i] )
+
+			local buttonText = L2U.FindGameObjectAsComponent( "Text", "Text", buttonGO )
+			buttonText.text = buttonTexts[i]
+		end
+	end
+
+	function _initHelloWorldTexts()
+		_helloTextGO = L2U.FindGameObject( "HelloWorld/Text_Hello", _canvasGO )
+		_helloTextGO:SetActive( false )
+		_worldTextGO = L2U.FindGameObject( "HelloWorld/Text_World", _canvasGO )
+		_worldTextGO:SetActive( false )
+	end
+
+	function _onButtonHelloWorldClicked( go )
+		_button1 = go:GetComponent( "Button" )
+		_button1.interactable = false
+
+		_helloWorldStartTime = Time.time
+
+		_helloTextGO:SetActive( true )
+
+		print("Hello world!")
+	end
+
+	function _onButtonErrorClicked( go )
+		error( "Error will happen..." )
+
+		inexist.foo = false
+	end
+
+	function _onButtonExitClicked( go )
+		log( "Exiting..." )
+
+		Application.Quit()
+	end
+
+	function self.start()
+	end
+
+	function self.update()
+		if _button1 ~= nil then
+			local t = Time.time - _helloWorldStartTime
+			if t >= 2 then
+				_helloTextGO:SetActive( false )
+				_worldTextGO:SetActive( false )
+
+				_button1.interactable = true
+
+				_button1 = nil
+			elseif t >= 0.5 then
+				_worldTextGO:SetActive( true )
+			end
+		end
+	end
+
+	function self.onDestroy()
+	end
+
+	---- END
+
+	return self
+end
+
+return classExampleUI

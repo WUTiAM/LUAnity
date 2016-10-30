@@ -5,7 +5,7 @@ namespace LUAnity
 	using System.Reflection;
 
 	// Cached method
-	struct MethodCache
+	public struct MethodCache
 	{
 		public MethodBase CachedMethod
 		{
@@ -31,11 +31,11 @@ namespace LUAnity
 		public int[] OutList; // Positions of out parameters
 		public MethodArgs[] ArgTypes; // Types of parameters
 
-		private MethodBase _cachedMethod;
+		MethodBase _cachedMethod;
 	}
 
 	// Parameter information
-	struct MethodArgs
+	public struct MethodArgs
 	{
 		public int Index; // Position of parameter
 		public ValueExtractor ExtractValue; // Type-conversion function
@@ -44,12 +44,12 @@ namespace LUAnity
 	}
 
 	// Argument extraction with type-conversion function
-	delegate object ValueExtractor( IntPtr luaState, int stackPos );
+	public delegate object ValueExtractor( IntPtr luaState, int stackPos );
 
 	// Wrapper class for methods/constructors accessed from Lua
-	class LuaMethodWrapper
+	public class LuaMethodWrapper
 	{
-		internal LuaCSFunction InvokeFunction;
+		public LuaCSFunction InvokeFunction;
 
 		ObjectTranslator _translator;
 		object _target;

@@ -3,7 +3,6 @@ Library/
 Temp/
 *.sln
 *.csproj
-Tools/LUAnity/Source/Plugins/
-Tools/LUAnity/Source/LuaJIT-2.0.4/src/libluajit.so
-Tools/LUAnity/Source/LuaJIT-2.0.4/src/luajit
+Assets/LUAnity/Source/LuaJIT-2.0.4/src/libluajit.so
+Assets/LUAnity/Source/LuaJIT-2.0.4/src/luajit
 *.o

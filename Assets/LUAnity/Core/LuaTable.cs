@@ -52,13 +52,13 @@
 		}
 
 		// Gets an string fields of a table ignoring its metatable, if it exists
-		internal object RawGet( string field )
+		public object RawGet( string field )
 		{
 			return _interpreter.RawGetObject( _reference, field );
 		}
 
 		// Pushes this table into the Lua stack
-		internal void Push( IntPtr luaState )
+		public void Push( IntPtr luaState )
 		{
 			LuaLib.lua_rawgeti( luaState, LuaIndexes.LUA_REGISTRYINDEX, _reference );
 		}

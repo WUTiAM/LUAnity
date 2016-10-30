@@ -6,7 +6,7 @@ namespace LUAnity
 #pragma warning disable 414
 	public class MonoPInvokeCallbackAttribute : Attribute
 	{
-		private Type type;
+		Type type;
 
 		public MonoPInvokeCallbackAttribute( Type t )
 		{

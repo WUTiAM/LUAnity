@@ -39,12 +39,12 @@ namespace LUAnity
 		}
 
 		// Checks if the value at Lua stack index stackPos matches paramType, returning a conversion function if it does and null otherwise.
-		internal ValueExtractor GetExtractor( ProxyType paramType )
+		public ValueExtractor GetExtractor( ProxyType paramType )
 		{
 			return GetExtractor( paramType.UnderlyingSystemType );
 		}
 
-		internal ValueExtractor GetExtractor( Type paramType )
+		public ValueExtractor GetExtractor( Type paramType )
 		{
 			if( paramType.IsByRef )
 			{
@@ -58,7 +58,7 @@ namespace LUAnity
 			return _extractNetObject;
 		}
 
-		internal ValueExtractor CheckLuaType( IntPtr luaState, int stackPos, Type paramType )
+		public ValueExtractor CheckLuaType( IntPtr luaState, int stackPos, Type paramType )
 		{
 			LuaTypes luaType = LuaLib.lua_type( luaState, stackPos );
 

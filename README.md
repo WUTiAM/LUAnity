@@ -3,8 +3,8 @@
 LUAnity 是一套在 Unity 中使用 Lua 开发手机游戏的解决方案及，并在已上线的 3D 手游大作中有出色的表现。  
 LUAnity is a solution for mobile game development using Lua in Unity. It has been verified in onlined 3D mobile games.
 
-LUAnity 基于我们重构整理后的全新 LuaInterface（同时参考了 [MonoLuaInterface](https://github.com/stevedonovan/MonoLuaInterface) 及 [NLua](https://github.com/NLua/NLua) 的一些修改），无缝集成到 Unity，并针对手机游戏的需求扩展了一些功能（如支持 ARM64、Protocol Buffers、JSON 等）。  
-LUAnity integrated our own version of LuaInterface (also made a few references to [MonoLuaInterface](https://github.com/stevedonovan/MonoLuaInterface) and [NLua](https://github.com/NLua/NLua)) into Unity, and added some functions (i.e. ARM64, Protocol Buffers, JSON support) for mobile game development as well.
+LUAnity 基于 LuaInterface，并无缝集成进 Unity，可在 Unity Editor 以及移动设备上运行 Lua 代码来控制游戏。我们大幅修改、重构、整理了 LuaInterface 的代码（同时参考了 [MonoLuaInterface](https://github.com/stevedonovan/MonoLuaInterface) 及 [NLua](https://github.com/NLua/NLua) 的一些修改），并针对手机游戏的需求扩展了一些功能（如支持 ARM64、LuaJIT 等）。  
+LUAnity is based on LuaInterface and integrated into Unity seamlessly. It makes Lua codes running perfectly in Unity Editor and mobile devices to control your games. We refactored and optimized the LuaInterface codes (and made a few references to [MonoLuaInterface](https://github.com/stevedonovan/MonoLuaInterface) and [NLua](https://github.com/NLua/NLua)), and added some functions (i.e. ARM64, LuaJIT support) for mobile game development as well.
 
 同时，LUAnity 也是一套代码设计及编写规范。在开发过程始终坚持这些规范，才能真正发挥出 LUAnity 的全部潜力。
 In the meantime, LUAnity is also some principles for code design and writing. It's highly recommended to follow these principles to achieve the best results.
@@ -20,8 +20,8 @@ Coding in Lua & C# seamlessly in Unity, to control anything you want
 Importing C# classes/functions to Lua and using them at any time with no C# code generated, best for code updating
 - 由原生 Lua 虚拟机执行代码，性能可靠，更可快速替换为原生 LuaJIT  
 Running in raw Lua VM with great performance, or even in LuaJIT
-- 协程、错误处理等更多功能支持  
-Supporting Coroutine, error handling, etc
+- 错误处理及 Lua call stack 追踪  
+Handling errors and tracking Lua call stack
 - 全面支持 Android/iOS 32位/64位  
 Supporting Android and iOS (ARMv7/ARM64)
 - 完美对接 uGUI 以及 NGUI 等  
@@ -30,7 +30,7 @@ Working perfectly with uGUI, NGUI, and etc
 要求：  
 Requires:
 
-- Lua 5.1.4 or higher (5.1.4 by default)
+- Lua 5.1.x or higher (5.1.5 by default)
  - or LuaJIT (2.0.3 for Android and 2.1.0 for iOS)
 - Unity 4.6 or higher (5.4 by default)
 
@@ -40,13 +40,6 @@ Suported Platforms:
 - Android (ARMv7/ARM64)
 - iOS (ARMv7/ARM64)
 
-已集成第三方组件：  
-Third-Party Module Integration:
-
-- [dkjson](http://dkolf.de/src/dkjson-lua.fsl/home)
-- [Protocol Buffers](https://github.com/google/protobuf)
-- [protoc-gen-lua](https://github.com/paynechu/protoc-gen-lua)
-
 ---
 
 **为什么我们选择基于反射的动态绑定方式（而不是静态绑定）？**  
@@ -54,19 +47,24 @@ Third-Party Module Integration:
 
 我们在 Unity 中使用 Lua 的核心目标，就是让尽可能多的代码支持热更新，而不需要重新出包重新发布游戏。  
 
-基于反射（也就是 LuaInterface 使用的绑定方式），可以最大程度的降低 C# 代码量以及修改 C# 代码的频率。在开发过程中，随时随地将 Unity/Mono 的类引入 Lua 来使用，并立即将新功能热更新到线上环境，想想就有点小激动，对吧。
+基于反射（也就是 LuaInterface 使用的绑定方式），可以最大程度的降低修改 C# 代码的频率及代码量。在开发过程中，随时随地将 Unity/Mono 的类引入 Lua 来使用，并立即将新功能热更新到线上环境，想想就有点小激动，对吧。  
 
-这是静态绑定所无法提供的。静态绑定的方式需要为所有 Lua 可能会使用到的 Unity/Mono 类和函数生成绑定代码（C#），而 C# 代码的改动需要重新出包重新发布游戏，这很大程度上限制了热更新的应用场景。  
+这是静态绑定所无法提供的。静态绑定的方式需要为所有 Lua 可能会使用到的 Unity/Mono 类和函数生成 C# 绑定代码(而 C# 代码的改动需要重新出包重新发布游戏)这很大程度上限制了热更新的应用场景。  
 
-那么，说到反射，大家最关心的就是性能问题了。我们坚信，游戏性能的好坏，主要取决于制作方法。就算用最好的语言和技术，糟糕的设计和实现方式依然只能做出慢到渣的游戏。  
-Speaking of reflection, the performance will be the top issue we concerned.   
+那么，说到反射，大家最关心的就是性能问题了。  
 
-用 Unity 的时候，深挖吃透 Unity 的工作原理，或是把 Unity 当 Office 用，开发出来的游戏性能可以相差至少 10 倍。  
-A game made by someone who deeply understands the underlying machanism of Unity may be 10 times faster than the one made by the other one who simply uses Unity like the MS Office.
+我们一直相信，游戏性能的好坏，主要取决于制作方法和对技术的使用方式。以什么样的姿势使用 LUAnity，开发出来的游戏性能可以相差几十倍。  
 
-同样的，以什么样的姿势使用 LUAnity，也就是如何定义 Unity 和 Lua 的关系、如何设计游戏框架、如何制定代码规范并坚持执行，才是决定游戏性能是否达标的主要因素。所谓的“反射太慢，静态绑定才够快”，如果脱离了应用场景和使用方式，就是以讹传讹的耍流氓。
+也就是说，如何定义 Unity 和 Lua 的关系、如何设计游戏框架、如何制定代码规范并坚持执行，才是决定游戏性能是否达标的主要因素。  
 
-LUAnity 的设计规范是这样的：在 C# 层仅提供很少会改动的基础功能支持和接口，剩下的所有业务逻辑全部在 Lua 内部实现（甚至包括策划数据表和 Protocol Buffer），严禁在一帧内高频来回于 Lua 和 C#。
+LUAnity 的设计规范其实很简单：  
+
+1. 在 C# 层仅提供很少会改动的**基础**功能支持和接口
+2. 所有业务逻辑**全部**在 Lua 内部实现
+ * 甚至包括策划数据表和 Protocol Buffer
+3. 严禁在一帧内**高频**来回于 Lua 和 C#
+
+一切用事实说话，我们基于 LUAnity 的 3D 手游在低配机上依然可以正常游戏。所谓的“反射太慢，静态绑定才够快”，如果脱离了应用场景和使用方式，就是以讹传讹的耍流氓。  
 
 ---
 

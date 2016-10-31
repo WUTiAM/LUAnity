@@ -4,11 +4,13 @@ LUAJIT_VER="LuaJIT-2.0.4"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
 	# macOS
+	# !! TODO: Change to your own path !!
 	NDK=/Users/jo3l/Development/android-ndk-r13
 	NDKVER=$NDK/toolchains/arm-linux-androideabi-4.9
 	NDKP=$NDKVER/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-
 else
 	# Windows
+	# !! TODO: Change to your own path !!
 	NDK=/f/Applications/android-ndk-r13
 	NDKVER=$NDK/toolchains/arm-linux-androideabi-4.9
 	NDKP=$NDKVER/prebuilt/windows-x86_64/bin/arm-linux-androideabi-

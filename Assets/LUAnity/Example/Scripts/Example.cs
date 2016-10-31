@@ -77,7 +77,7 @@ public class Example : MonoBehaviour
 	{
 		GameObject.Destroy( _uiGO );
 		_uiGO = null;
-		
+
 		L2U.lua.Dispose();
 		L2U.lua = null;
 	}

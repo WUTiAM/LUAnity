@@ -57,7 +57,7 @@ local function classExampleUI()
 		for i = 1, #buttonTexts do
 			local buttonGO = L2U.CloneGameObject( buttonPrototypeGO )
 			buttonGO:SetActive( true )
-			L2U.SetGameObjectLocalPosition( buttonGO, buttonLocalPosX, buttonLocalPosY - 60 * ( i - 1 ), 0 )
+			L2U.SetGameObjectLocalPosition( buttonGO, buttonLocalPosX, buttonLocalPosY - 80 * ( i - 1 ), 0 )
 			L2U.AddUIButtonOnClickListener( buttonGO, buttonOnClickListeners[i] )
 
 			local buttonText = L2U.FindGameObjectAsComponent( "Text", "Text", buttonGO )

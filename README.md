@@ -11,8 +11,8 @@ In the meantime, LUAnity is also some principles for code design and writing. It
 
 ---
 
-特性：  
-Features:
+**特性**：  
+**Features**:
 
 - 在 Unity 中无缝编写 Lua/C# 代码，控制所有你想控制的  
 Coding in Lua & C# seamlessly in Unity, to control anything you want
@@ -27,15 +27,15 @@ Supporting Android and iOS (ARMv7/ARM64)
 - 完美对接 uGUI 以及 NGUI 等  
 Working perfectly with uGUI, NGUI, and etc
 
-要求：  
-Requires:
+**要求**：  
+**Requires**:
 
 - Lua 5.1.x or higher (5.1.5 by default)
  - or LuaJIT (2.0.3 for Android and 2.1.0 for iOS)
 - Unity 4.6 or higher (5.4 by default)
 
-支持平台：  
-Suported Platforms:
+**支持平台**：  
+**Suported Platforms**:
 
 - Android (ARMv7/ARM64)
 - iOS (ARMv7/ARM64)
@@ -57,12 +57,12 @@ Suported Platforms:
 
 也就是说，如何定义 Unity 和 Lua 的关系、如何设计游戏框架、如何制定代码规范并坚持执行，才是决定游戏性能是否达标的主要因素。  
 
-我们的设计规范其实很简单：
+我们的设计规范其实很简单：  
 
-1. 在 C# 层仅提供很少会改动的**基础**功能支持和接口
-2. 所有业务逻辑**全部**在 Lua 内部实现
- * 甚至包括策划数据表和 Protocol Buffer
-3. 严禁在一帧内**高频**来回于 Lua 和 C#
+1. 在 C# 层仅提供很少会改动的**基础**功能支持和接口  
+2. 所有业务逻辑**全部**在 Lua 内部实现  
+ * 甚至包括策划数据表和 Protocol Buffer  
+3. 严禁在一帧内**高频**来回于 Lua 和 C#  
 
 我们的 Lua 编码规范也很简单，就一条：
 
@@ -74,13 +74,15 @@ Suported Platforms:
  * 函数调用速度更快
   * 不用从 __index 元方法中查询
 
-性能问题，关键还是看实施。坚持执行这套规范，做好核心代码审查，我们基于 LUAnity 的 3D 手游在低配机上依然可以顺畅游戏。
+性能问题，关键还是看实施。坚持执行这套规范，做好核心代码审查，我们基于 LUAnity 的 3D 手游在低配机上依然可以顺畅游戏。  
 
-大家常用的简单粗暴循环100万次的性能测试确实能**部分**反映框架实现的优劣，但游戏是一个复杂的逻辑综合体，有太多的因素影响运行性能。 “反射太慢，静态绑定才够快”，脱离了应用场景人云亦云，就是赤果果地在缴智商税。  
+大家常用的简单粗暴循环100万次的性能测试确实能**部分**反映框架实现的优劣，但游戏是一个复杂的逻辑综合体，有太多的因素影响运行性能，比如一个好的缓存设计能大幅降低频繁从 Lua 访问 C# 数据的巨额开销。  
+
+“反射太慢，静态绑定才够快”，脱离了应用场景人云亦云，就是赤果果地在缴智商税。  
 
 ---
 
-以下是这几年出现过的 Unity + Lua 解决方案，各有特点，仅供参考 
+以下是这几年出现过的 Unity + Lua 解决方案，各有特点，仅供参考  
 The following are some Unity + Lua solutions in the last few years, FYI
 
 - [NLua](https://github.com/NLua/NLua) 

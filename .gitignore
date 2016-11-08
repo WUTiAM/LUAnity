@@ -6,3 +6,5 @@ Temp/
 Source/LuaJIT-2.0.4/src/libluajit.so
 Source/LuaJIT-2.0.4/src/luajit
 *.o
+XcodeProject.iOS
+Source/ios/Build

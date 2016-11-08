@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0F4B04D41800959F002EA938 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F4B04D31800959F002EA938 /* CoreFoundation.framework */; };
 		0FF10F8E18009600008588E3 /* lua_wrap.c in Sources */ = {isa = PBXBuildFile; fileRef = 0FF10F8D18009600008588E3 /* lua_wrap.c */; };
-		395E63B31C951955009737A6 /* pb.c in Sources */ = {isa = PBXBuildFile; fileRef = 395E63B21C951955009737A6 /* pb.c */; };
 		396452101CFD8B5800B8B7AC /* liblua-x86_64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3964520F1CFD8B5800B8B7AC /* liblua-x86_64.a */; };
 /* End PBXBuildFile section */
 
@@ -18,7 +17,6 @@
 		0F4B04D31800959F002EA938 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		0F4B04D71800959F002EA938 /* luanity-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "luanity-Info.plist"; sourceTree = "<group>"; };
 		0FF10F8D18009600008588E3 /* lua_wrap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lua_wrap.c; path = ../../lua_wrap.c; sourceTree = "<group>"; };
-		395E63B21C951955009737A6 /* pb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pb.c; path = ../../pb.c; sourceTree = "<group>"; };
 		3964520F1CFD8B5800B8B7AC /* liblua-x86_64.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "liblua-x86_64.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,7 +62,6 @@
 		0F4B04D51800959F002EA938 /* LUAnity */ = {
 			isa = PBXGroup;
 			children = (
-				395E63B21C951955009737A6 /* pb.c */,
 				0FF10F8D18009600008588E3 /* lua_wrap.c */,
 				0F4B04D61800959F002EA938 /* Supporting Files */,
 			);
@@ -142,7 +139,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FF10F8E18009600008588E3 /* lua_wrap.c in Sources */,
-				395E63B31C951955009737A6 /* pb.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,7 +176,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -212,7 +208,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -236,6 +232,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-all_load";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wutiam.luanity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = x86_64;
 				WRAPPER_EXTENSION = bundle;
@@ -261,6 +258,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-all_load";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wutiam.luanity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = x86_64;
 				WRAPPER_EXTENSION = bundle;

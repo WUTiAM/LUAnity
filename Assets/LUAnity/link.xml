@@ -1,0 +1,88 @@
+<linker>
+	<assembly fullname="mscorlib">
+		<type fullname="System.Collections.*" preserve="all"/>
+		<type fullname="System.IO.*" preserve="all"/>
+		<type fullname="System.Text.*" preserve="all"/>
+	</assembly>
+
+	<assembly fullname="System.Core">
+		<type fullname="System.Collections.Generic.*" preserve="all"/>
+	</assembly>
+
+	<assembly fullname="UnityEngine">
+		<type fullname="UnityEngine.Animation" preserve="all"/>
+		<type fullname="UnityEngine.Animation*" preserve="all"/>
+		<type fullname="UnityEngine.Animator" preserve="all"/>
+		<type fullname="UnityEngine.Animator*" preserve="all"/>
+		<type fullname="UnityEngine.Application" preserve="all"/>
+		<type fullname="UnityEngine.Audio*" preserve="all"/>
+		<type fullname="UnityEngine.BoxCollider" preserve="all"/>
+		<type fullname="UnityEngine.BoxCollider2D" preserve="all"/>
+		<type fullname="UnityEngine.Camera" preserve="all"/>
+		<type fullname="UnityEngine.Canvas" preserve="all"/>
+		<type fullname="UnityEngine.Color" preserve="all"/>
+		<type fullname="UnityEngine.Color*" preserve="all"/>
+		<type fullname="UnityEngine.Display" preserve="all"/>
+		<type fullname="UnityEngine.Font" preserve="all"/>
+		<type fullname="UnityEngine.GameObject" preserve="all"/>
+		<type fullname="UnityEngine.Graphics" preserve="all"/>
+		<type fullname="UnityEngine.Hash128" preserve="all"/>
+		<type fullname="UnityEngine.Input" preserve="all"/>
+		<type fullname="UnityEngine.Light" preserve="all"/>
+		<type fullname="UnityEngine.Light*" preserve="all"/>
+		<type fullname="UnityEngine.Logger" preserve="all"/>
+		<type fullname="UnityEngine.Material" preserve="all"/>
+		<type fullname="UnityEngine.Mathf" preserve="all"/>
+		<type fullname="UnityEngine.Matrix4x4" preserve="all"/>
+		<type fullname="UnityEngine.Mesh" preserve="all"/>
+		<type fullname="UnityEngine.Mesh*" preserve="all"/>
+		<type fullname="UnityEngine.NavMesh" preserve="all"/>
+		<type fullname="UnityEngine.NavMesh*" preserve="all"/>
+		<type fullname="UnityEngine.Network" preserve="all"/>
+		<type fullname="UnityEngine.Network*" preserve="all"/>
+		<type fullname="UnityEngine.Object" preserve="all"/>
+		<type fullname="UnityEngine.Particle*" preserve="all"/>
+		<type fullname="UnityEngine.Plane" preserve="all"/>
+		<type fullname="UnityEngine.PlayerPrefs" preserve="all"/>
+		<type fullname="UnityEngine.PolygonCollider2D" preserve="all"/>
+		<type fullname="UnityEngine.Projector" preserve="all"/>
+		<type fullname="UnityEngine.QualitySettings" preserve="all"/>
+		<type fullname="UnityEngine.Quaternion" preserve="all"/>
+		<type fullname="UnityEngine.Random" preserve="all"/>
+		<type fullname="UnityEngine.Ray" preserve="all"/>
+		<type fullname="UnityEngine.Ray*" preserve="all"/>
+		<type fullname="UnityEngine.Rect" preserve="all"/>
+		<type fullname="UnityEngine.Rect*" preserve="all"/>
+		<type fullname="UnityEngine.Render*" preserve="all"/>
+		<type fullname="UnityEngine.Resolution" preserve="all"/>
+		<type fullname="UnityEngine.Resources" preserve="all"/>
+		<type fullname="UnityEngine.Rigidbody" preserve="all"/>
+		<type fullname="UnityEngine.Rigidbody*" preserve="all"/>
+		<type fullname="UnityEngine.SceneManagement" preserve="all"/>
+		<type fullname="UnityEngine.Screen" preserve="all"/>
+		<type fullname="UnityEngine.Shader" preserve="all"/>
+		<type fullname="UnityEngine.SkinnedMeshRenderer" preserve="all"/>
+		<type fullname="UnityEngine.Skybox" preserve="all"/>
+		<type fullname="UnityEngine.SystemInfo" preserve="all"/>
+		<type fullname="UnityEngine.Terrain" preserve="all"/>
+		<type fullname="UnityEngine.Terrain*" preserve="all"/>
+		<type fullname="UnityEngine.TextAsset" preserve="all"/>
+		<type fullname="UnityEngine.Texture" preserve="all"/>
+		<type fullname="UnityEngine.Texture*" preserve="all"/>
+		<type fullname="UnityEngine.Time" preserve="all"/>
+		<type fullname="UnityEngine.Touch" preserve="all"/>
+		<type fullname="UnityEngine.Touch*" preserve="all"/>
+		<type fullname="UnityEngine.TrailRenderer" preserve="all"/>
+		<type fullname="UnityEngine.Transform" preserve="all"/>
+		<type fullname="UnityEngine.Types" preserve="all"/>
+		<type fullname="UnityEngine.Vector*" preserve="all"/>
+		<type fullname="UnityEngine.WWW" preserve="all"/>
+		<type fullname="UnityEngine." preserve="all"/>
+		<type fullname="UnityEngine." preserve="all"/>
+		<type fullname="UnityEngine." preserve="all"/>
+		<type fullname="UnityEngine." preserve="all"/>
+	</assembly>
+
+	<assembly fullname="UnityEngine.UI" preserve="all"/>
+</linker>
+

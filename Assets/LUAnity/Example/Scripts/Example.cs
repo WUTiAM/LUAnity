@@ -39,40 +39,6 @@ public class Example : MonoBehaviour
 		return 0;
 	}
 
-	// Anti-Strip_Byte_Code here!
-	static void __AntiStripByteCode__()
-	{
-		GameObject go = new GameObject();
-		go = go.gameObject;
-		go.SendMessage( "" );
-
-		Animation anim = go.GetComponent<Animation>();
-		anim.Blend( "" );
-		anim.GetClip( "" );
-		anim.IsPlaying( "" );
-		anim.CrossFade( "" );
-		anim.CrossFadeQueued( "" );
-
-		AudioClip clip = new AudioClip();
-		float audioClipLength = clip.length;
-
-		Camera camera = new Camera();
-		Vector3 vector3 = go.transform.localEulerAngles;
-		camera.transform.localEulerAngles = vector3;
-
-		Shader shader = Shader.Find( "" );
-
-		Material m = new Material( shader );
-		m.GetFloat( "" );
-		m.SetFloat( "", audioClipLength );
-
-		RenderSettings.fog = RenderSettings.fog;
-		RenderSettings.fogColor = RenderSettings.fogColor;
-		RenderSettings.fogDensity = RenderSettings.fogDensity;
-		RenderSettings.fogStartDistance = RenderSettings.fogStartDistance;
-		RenderSettings.fogEndDistance = RenderSettings.fogEndDistance;
-	}
-
 	void OnDestroy()
 	{
 		GameObject.Destroy( _uiGO );

@@ -18,7 +18,7 @@ local function classGOControllerBase()
 
 	---- 成员函数 ----
 
-	function self.setGameObject(go)
+	function self.setGameObject( go )
 		self.gameObject = go
 	end
 
